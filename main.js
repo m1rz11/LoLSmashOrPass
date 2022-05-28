@@ -16,6 +16,9 @@ let totalCounter = document.getElementById('totalcounter');
 let smashCounter = document.getElementById('smashcounter');
 let passCounter = document.getElementById('passcounter');
 
+let fbisound = new Audio('audio/fbi.mp3');
+let illegalsound = new Audio('audio/illegal.mp3');
+
 function init(){
     getChampionList().then(result => {
         champList = result;
@@ -48,6 +51,12 @@ function smash(){
     smashListElem.innerHTML = smashListStr;
     datasaved = false;
     pickRandomChampion();
+
+    // added this to agitate people who need to touch some grass
+    if (champion.name.toLowerCase().includes('annie') || champion.name.toLowerCase().includes('zoe')){
+        if (Math.random() < 0.8) fbisound.play();
+        else illegalsound.play();
+    }
 }
 
 function pass(){
