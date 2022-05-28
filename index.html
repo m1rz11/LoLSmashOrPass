@@ -15,13 +15,36 @@
 
     <br><h1 id="championname"></h1>
     <div>
-        <button class="btn btn-secondary bigbutton" id="smashcounter">0</button>
+        <button class="btn btn-secondary bigbutton" id="smashcounter" data-bs-toggle="collapse" data-bs-target="#smashlist-collapse" aria-expanded="false">0</button>
         <button class="btn btn-success bigbutton" id="smashbutton" onclick="smash()">SMASH</button>
         <button class="btn btn-danger bigbutton" id="passbutton" onclick="pass()">PASS</button>
-        <button class="btn btn-secondary bigbutton" id="passcounter">0</button>
+        <button class="btn btn-secondary bigbutton" id="passcounter" data-bs-toggle="collapse" data-bs-target="#passlist-collapse" aria-expanded="false">0</button>
     </div>
+
+    <div class="collapse" id="smashlist-collapse">
+        <br><h3>SMASH</h3>
+        <div class="card card-body">
+            <p id="smashlist"></p>
+        </div>
+    </div>
+    <div class="collapse" id="passlist-collapse">
+        <br><h3>PASS</h3>
+        <div class="card card-body">
+            <p id="passlist"></p>
+        </div>
+    </div>
+
     <p id="totalcounter"></p>
-    <p id="versiontext">Loading</p>
+    <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#options-collapse" aria-expanded="false">Options</button>
+
+    <div class="collapse" id="options-collapse">
+        <br>
+        <div class="card card-body">
+            <button class="btn btn-danger" data-bs-toggle="collapse" data-bs-target="#options-collapse" aria-expanded="false" onclick="if(confirm('Are you sure? This will reset all progress.')){clearData();location.reload();}">Delete all data</button>
+        </div>
+    </div>
+
+    <p id="versiontext"></p>
 </div>
 
 

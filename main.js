@@ -2,13 +2,16 @@ init();
 const language = 'en_US';
 let champList = [];
 let smashList = [];
+let smashListStr = "";
+let passListStr = "";
 let passList = [];
 let current;
 let datasaved = true;
 
 let championImage = document.getElementById('championimage');
 let championName = document.getElementById('championname');
-
+let smashListElem = document.getElementById('smashlist');
+let passListElem = document.getElementById('passlist');
 let totalCounter = document.getElementById('totalcounter');
 let smashCounter = document.getElementById('smashcounter');
 let passCounter = document.getElementById('passcounter');
@@ -38,20 +41,21 @@ function pickRandomChampion(){
     passCounter.innerText = passList.length;
 }
 
-function moveChampToList(list){
-    let champion = champList.splice(current,1)[0];
-    console.log(champion);
-    list.unshift(champion);
-    datasaved = false;
-}
-
 function smash(){
-    moveChampToList(smashList);
+    let champion = champList.splice(current,1)[0];
+    smashList.unshift(champion);
+    smashListStr += champion.name + "<br>";
+    smashListElem.innerHTML = smashListStr;
+    datasaved = false;
     pickRandomChampion();
 }
 
 function pass(){
-    moveChampToList(passList);
+    let champion = champList.splice(current,1)[0];
+    passList.unshift(champion);
+    passListStr += champion.name + "<br>";
+    passListElem.innerHTML = passListStr;
+    datasaved = false;
     pickRandomChampion();
 }
 
@@ -84,6 +88,7 @@ function loadData(){
             for (let o in champList){
                 if (currid === champList[o].id){
                     smashList.push(champList[o]);
+                    smashListStr += champList[o].name+"<br>";
                     champList.splice(o,1);
                     smashids.splice(i, 1);
 
@@ -100,6 +105,7 @@ function loadData(){
             for (let o in champList){
                 if (currid === champList[o].id){
                     passList.push(champList[o]);
+                    passListStr += champList[o].name+"<br>";
                     champList.splice(o,1);
                     passids.splice(i, 1);
 
@@ -107,11 +113,15 @@ function loadData(){
                 }
             }
         }
+
+    passListElem.innerHTML = passListStr;
+    smashListElem.innerHTML = smashListStr;
 }
 
 function clearData(){
-    localStorage.removeItem('smashlist');
-    localStorage.removeItem('passlist');
+    smashList = [];
+    passList = [];
+    saveData();
 }
 
 async function getChampionList() {
