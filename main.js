@@ -77,8 +77,8 @@ function saveData(){
 }
 
 function loadData(){
-    const smashids = JSON.parse(localStorage.getItem('smashlist')).reverse() ?? [];
-    const passids = JSON.parse(localStorage.getItem('passlist')).reverse() ?? [];
+    const smashids = JSON.parse( (localStorage.getItem('smashlist') ?? "[]")).reverse() ;
+    const passids = JSON.parse( (localStorage.getItem('passlist') ?? "[]")).reverse();
 
     // load smash list
     loadsmash:
