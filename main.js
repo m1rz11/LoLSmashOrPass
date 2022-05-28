@@ -18,6 +18,7 @@ let passCounter = document.getElementById('passcounter');
 
 let fbisound = new Audio('audio/fbi.mp3');
 let illegalsound = new Audio('audio/illegal.mp3');
+let tadasound = new Audio('audio/illegal.mp3');
 
 function init(){
     getChampionList().then(result => {
@@ -31,9 +32,6 @@ function init(){
 }
 
 function pickRandomChampion(){
-    if (champList.length === 0){
-        alert('Welp, you seem to have run out of characters =D time well spent eh?');
-    }
     current = Math.floor(Math.random() * champList.length);
     const champion = champList[current];
 
@@ -41,8 +39,9 @@ function pickRandomChampion(){
         championName.innerText = champion.name;
         championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
     }catch (e){
-        championName.innerText = 'Now go touch some grass';
+        championName.innerText = smashList.length > passList.length ? 'Now go touch some grass' : 'gg';
         championImage.src = 'https://c.tenor.com/bOcoT4nn3noAAAAd/alistar-league-of-legends.gif';
+        tadasound.play();
     }
     totalCounter.innerText = champList.length + ' remain';
     smashCounter.innerText = smashList.length;
@@ -138,8 +137,17 @@ function clearData(){
     saveData();
 }
 
-function saveListAsFile(filename, list){
-    
+function download(filename, text) {
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }
 
 async function getChampionList() {
