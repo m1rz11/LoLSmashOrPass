@@ -18,7 +18,7 @@ let passCounter = document.getElementById('passcounter');
 
 let fbisound = new Audio('audio/fbi.mp3');
 let illegalsound = new Audio('audio/illegal.mp3');
-let tadasound = new Audio('audio/illegal.mp3');
+let tadasound = new Audio('audio/tada.mp3');
 
 function init(){
     getChampionList().then(result => {
@@ -37,8 +37,10 @@ function pickRandomChampion(){
 
     try{
         championName.innerText = champion.name;
-        championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
+        //championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
     }catch (e){
+        document.getElementById('smashbutton').remove();
+        document.getElementById('passbutton').remove();
         championName.innerText = smashList.length > passList.length ? 'Now go touch some grass' : 'gg';
         championImage.src = 'https://c.tenor.com/bOcoT4nn3noAAAAd/alistar-league-of-legends.gif';
         tadasound.play();
@@ -183,9 +185,7 @@ setInterval(()=> {
     if (!datasaved){
         saveData();
     }
-}, 60000);
-
-//setInterval(()=>{smash()}, 20);
+}, 30000);
 
 window.onbeforeunload = () => {
     saveData();
@@ -193,7 +193,6 @@ window.onbeforeunload = () => {
 
 // keyboard controls
 document.onkeyup = (e) => {
-    console.log(e.code);
     switch (e.code){
         case 'ArrowLeft':
             smash();
@@ -201,5 +200,10 @@ document.onkeyup = (e) => {
         case 'ArrowRight':
             pass();
             break;
+        /*case 'ArrowUp':
+            interval = setInterval(()=>{
+                pass();
+                if (champList.length < 100)clearInterval(interval);
+            }, 10);*/
     }
 }
