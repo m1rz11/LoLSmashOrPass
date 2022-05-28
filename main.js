@@ -162,3 +162,16 @@ setInterval(()=> {
 window.onbeforeunload = () => {
     saveData();
 }
+
+// keyboard controls
+document.onkeyup = (e) => {
+    console.log(e.code);
+    switch (e.code){
+        case 'ArrowLeft':
+            smash();
+            break;
+        case 'ArrowRight':
+            pass();
+            break;
+    }
+}
