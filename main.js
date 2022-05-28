@@ -2,8 +2,8 @@ init();
 const language = 'en_US';
 let champList = [];
 let smashList = [];
-let smashListStr = "";
-let passListStr = "";
+let smashListStr = '';
+let passListStr = '';
 let passList = [];
 let current;
 let datasaved = true;
@@ -32,14 +32,19 @@ function init(){
 
 function pickRandomChampion(){
     if (champList.length === 0){
-        alert('Welp, you seem to have run out of characters :D time well spent eh?');
+        alert('Welp, you seem to have run out of characters =D time well spent eh?');
     }
     current = Math.floor(Math.random() * champList.length);
     const champion = champList[current];
 
-    championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
-    championName.innerText = champion.name;
-    totalCounter.innerText = champList.length + " remain";
+    try{
+        championName.innerText = champion.name;
+        championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
+    }catch (e){
+        championName.innerText = 'Now go touch some grass';
+        championImage.src = 'https://c.tenor.com/bOcoT4nn3noAAAAd/alistar-league-of-legends.gif';
+    }
+    totalCounter.innerText = champList.length + ' remain';
     smashCounter.innerText = smashList.length;
     passCounter.innerText = passList.length;
 }
@@ -47,7 +52,7 @@ function pickRandomChampion(){
 function smash(){
     let champion = champList.splice(current,1)[0];
     smashList.unshift(champion);
-    smashListStr += champion.name + "<br>";
+    smashListStr += champion.name + '<br>';
     smashListElem.innerHTML = smashListStr;
     datasaved = false;
     pickRandomChampion();
@@ -62,7 +67,7 @@ function smash(){
 function pass(){
     let champion = champList.splice(current,1)[0];
     passList.unshift(champion);
-    passListStr += champion.name + "<br>";
+    passListStr += champion.name + '<br>';
     passListElem.innerHTML = passListStr;
     datasaved = false;
     pickRandomChampion();
@@ -86,8 +91,8 @@ function saveData(){
 }
 
 function loadData(){
-    const smashids = JSON.parse( (localStorage.getItem('smashlist') ?? "[]")).reverse() ;
-    const passids = JSON.parse( (localStorage.getItem('passlist') ?? "[]")).reverse();
+    const smashids = JSON.parse( (localStorage.getItem('smashlist') ?? '[]')).reverse() ;
+    const passids = JSON.parse( (localStorage.getItem('passlist') ?? '[]')).reverse();
 
     // load smash list
     loadsmash:
@@ -97,7 +102,7 @@ function loadData(){
             for (let o in champList){
                 if (currid === champList[o].id){
                     smashList.push(champList[o]);
-                    smashListStr += champList[o].name+"<br>";
+                    smashListStr += champList[o].name+'<br>';
                     champList.splice(o,1);
                     smashids.splice(i, 1);
 
@@ -114,7 +119,7 @@ function loadData(){
             for (let o in champList){
                 if (currid === champList[o].id){
                     passList.push(champList[o]);
-                    passListStr += champList[o].name+"<br>";
+                    passListStr += champList[o].name+'<br>';
                     champList.splice(o,1);
                     passids.splice(i, 1);
 
@@ -131,6 +136,10 @@ function clearData(){
     smashList = [];
     passList = [];
     saveData();
+}
+
+function saveListAsFile(filename, list){
+    
 }
 
 async function getChampionList() {
@@ -167,6 +176,8 @@ setInterval(()=> {
         saveData();
     }
 }, 60000);
+
+//setInterval(()=>{smash()}, 20);
 
 window.onbeforeunload = () => {
     saveData();
