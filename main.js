@@ -37,7 +37,7 @@ function pickRandomChampion(){
 
     try{
         championName.innerText = champion.name;
-        //championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
+        championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
     }catch (e){
         document.getElementById('smashbutton').remove();
         document.getElementById('passbutton').remove();
