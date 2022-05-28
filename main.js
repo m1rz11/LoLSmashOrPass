@@ -3,9 +3,15 @@ const language = 'en_US';
 let champList = [];
 let smashList = [];
 let passList = [];
+let current;
+let datasaved = true;
+
 let championImage = document.getElementById('championimage');
 let championName = document.getElementById('championname');
-let current;
+
+let totalCounter = document.getElementById('totalcounter');
+let smashCounter = document.getElementById('smashcounter');
+let passCounter = document.getElementById('passcounter');
 
 function init(){
     getChampionList().then(result => {
@@ -14,21 +20,29 @@ function init(){
         loadData();
         pickRandomChampion();
 
-        document.getElementById('main').style.display = 'inline';
+        document.getElementById('main').style.display = 'block';
     });
 }
 
 function pickRandomChampion(){
+    if (champList.length === 0){
+        alert('Welp, you seem to have run out of characters :D time well spent eh?');
+    }
     current = Math.floor(Math.random() * champList.length);
     const champion = champList[current];
+
     championImage.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.img}.jpg`;
     championName.innerText = champion.name;
+    totalCounter.innerText = champList.length + " remain";
+    smashCounter.innerText = smashList.length;
+    passCounter.innerText = passList.length;
 }
 
 function moveChampToList(list){
     let champion = champList.splice(current,1)[0];
     console.log(champion);
     list.unshift(champion);
+    datasaved = false;
 }
 
 function smash(){
@@ -54,6 +68,8 @@ function saveData(){
 
     localStorage.setItem('smashlist', JSON.stringify(smashids));
     localStorage.setItem('passlist', JSON.stringify(passids));
+
+    datasaved = true;
 }
 
 function loadData(){
@@ -125,6 +141,13 @@ async function getChampionList() {
 
     return champList;
 }
+
+// save data every minute
+setInterval(()=> {
+    if (!datasaved){
+        saveData();
+    }
+}, 60000);
 
 window.onbeforeunload = () => {
     saveData();

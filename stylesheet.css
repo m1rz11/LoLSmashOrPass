@@ -1,0 +1,13 @@
+.shadow{
+    box-shadow: 0px 2px 5px black;
+}
+
+.bigbutton{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+
+.counter{
+    background: #AAA;
+}
