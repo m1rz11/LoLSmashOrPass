@@ -1,2 +1,2 @@
 # Smash or pass but with LoL characters
-[i am so sorry](https://mirzi1.github.io/LoLSmashOrPass/)
+[i am so sorry](https://m1rz11.github.io/LoLSmashOrPass/)
